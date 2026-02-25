@@ -3,3 +3,4 @@
 -- Add any additional keymaps here
 vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 vim.keymap.set("n", ";", ":", { desc = "Command mode" })
+-- vim.keymap.set("n", "<F5>", vim.cmd.UndotreeToggle)

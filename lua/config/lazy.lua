@@ -21,6 +21,10 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "plugins" },
   },
+  -- Force lazy.nvim to expand handles into SSH URLs instead of HTTPS
+  git = {
+    url_format = "git@github.com:%s.git",
+  },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.

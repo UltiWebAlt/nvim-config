@@ -1,23 +1,5 @@
 return {
   {
-    "jay-babu/mason-nvim-dap.nvim",
-    opts = function(_, opts)
-      opts.handlers = opts.handlers or {}
-
-      opts.handlers.bash = function(config)
-        config.adapters = {
-          type = "executable",
-          command = "node",
-          args = {
-            "/home/rb/Projects/Linux/vscode-bash-debug/out/bashDebug.js",
-          },
-        }
-
-        require("mason-nvim-dap").default_setup(config)
-      end
-    end,
-  },
-  {
     "mfussenegger/nvim-dap",
     opts = function()
       vim.fn.sign_define("DapStopped", {

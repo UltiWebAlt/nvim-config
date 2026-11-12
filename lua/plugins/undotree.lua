@@ -4,8 +4,10 @@ return {
     cmd = { "UndotreeToggle", "UndotreeShow", "UndotreeHide", "UndotreeFocus" },
     init = function()
       -- Persist undo history across sessions
+      local undo_dir = vim.fn.expand("$HOME/.undodir/nvim")
+      vim.fn.mkdir(undo_dir, "p", 448)
       vim.opt.undofile = true
-      vim.opt.undodir = vim.fn.expand("$HOME/.undodir")
+      vim.opt.undodir = undo_dir
       -- Put undo files somewhere sane (cross-platform)
 
       -- Undotree plugin options (vimscript globals)

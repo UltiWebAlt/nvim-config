@@ -79,11 +79,14 @@ return {
   },
   {
     "rcarriga/nvim-dap-ui",
+    init = function()
+      require("config.dap_tooltips").setup()
+    end,
     opts = {
       layouts = {
         {
           position = "left",
-          size = 80,
+          size = 0.35, -- 35% of terminal width
           elements = {
             { id = "scopes", size = 0.40 },
             { id = "watches", size = 0.30 },
@@ -93,12 +96,17 @@ return {
         },
         {
           position = "bottom",
-          size = 10,
+          size = 0.35, -- 35% of terminal height
           elements = {
-            { id = "repl", size = 0.50 },
-            { id = "console", size = 0.50 },
+            { id = "repl", size = 0.25 },
+            { id = "console", size = 0.75 },
           },
         },
+      },
+
+      controls = {
+        enabled = true,
+        element = "console", -- Move debugger toolbar here
       },
     },
   },

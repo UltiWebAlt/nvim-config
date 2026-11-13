@@ -42,3 +42,18 @@ vim.api.nvim_create_user_command("ShellcheckFix", function()
   vim.cmd("edit!")
   vim.notify("ShellCheck fixes applied")
 end, {})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = vim.api.nvim_create_augroup("AutoChmodShebang", { clear = true }),
+  callback = function(args)
+    local first_line = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)[1]
+    if first_line and first_line:match("^#!") then
+      local file = vim.api.nvim_buf_get_name(args.buf)
+      local stat = vim.uv.fs_stat(file)
+      if stat and (stat.mode % 512) ~= 484 then -- skip if already 0744
+        -- Add execute bits (0111 = 73 in decimal) to existing permissions
+        vim.uv.fs_chmod(file, 484)
+      end
+    end
+  end,
+})

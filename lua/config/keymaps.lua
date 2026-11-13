@@ -32,14 +32,18 @@ local function diff_copy_line(to_right)
   vim.cmd(put and ".diffput" or ".diffget")
 end
 
-vim.keymap.set("n", ">", function()
+vim.keymap.set("n", "<C->>", function()
   diff_copy_line(true)
 end, { desc = "Diff: Copy line left to right" })
 
-vim.keymap.set("n", "<", function()
+vim.keymap.set("n", "<C-<>", function()
   diff_copy_line(false)
 end, { desc = "Diff: Copy line right to left" })
 
 vim.keymap.set("n", "<leader>cf", "<cmd>ShellcheckFix<cr>", {
   desc = "Apply ShellCheck fixes",
 })
+
+-- Set filetype to sh (Bash) or zsh and trigger esqueleto template
+vim.keymap.set("n", "<leader>fs", "<cmd>set filetype=sh<cr>", { desc = "Set Filetype: sh (Bash)" })
+vim.keymap.set("n", "<leader>fz", "<cmd>set filetype=zsh<cr>", { desc = "Set Filetype: zsh" })

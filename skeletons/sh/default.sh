@@ -3,10 +3,15 @@ set -Eeuo pipefail
 # Author: ${author}
 # Date: ${mdY}
 
-if [[ ${ZSH_DEBUG:-0} != 1 ]]; then
-  trap 'rc=$?; printf "ERROR: line %s: %s (exit %s)\n" "$LINENO" "$BASH_COMMAND" "$rc" >&2' ERR
+on_err() {
+  local rc=$?
+  printf 'ERROR: line %s: %s (exit %s)\n' "${BASH_LINENO[0]}" "$BASH_COMMAND" "$rc" >&2
+}
+
+if [[ "${BASH_DEBUG:-0}" != "1" ]]; then
+  trap 'on_err' ERR
 fi
 
-exec 1> >(logger -s -t $(basename "$0")) 2>&1
+exec 1> >(logger -s -t "$(basename "$0")") 2>&1
 
 ${cursor}

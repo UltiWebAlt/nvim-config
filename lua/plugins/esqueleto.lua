@@ -17,6 +17,9 @@ return {
           ["mdY"] = function()
             return os.date("%-m/%-d/%Y")
           end,
+          ["java_package"] = function()
+            local path = vim.fn.expand("%:p:h")
+          end,
         },
       },
 

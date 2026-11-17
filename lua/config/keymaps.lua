@@ -7,6 +7,10 @@ vim.keymap.set("n", ";", ":", { desc = "Command mode" })
 -- to get out of insert/append when in TERMINAL mode hit <esc>
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
 
+-- Set filetype to sh (Bash) or zsh and trigger esqueleto template
+vim.keymap.set("n", "<leader>fs", "<cmd>set filetype=sh<cr>", { desc = "Set Filetype: sh (Bash)" })
+vim.keymap.set("n", "<leader>fz", "<cmd>set filetype=zsh<cr>", { desc = "Set Filetype: zsh" })
+
 local function diff_copy_line(to_right)
   if not vim.wo.diff then
     vim.api.nvim_feedkeys(to_right and ">" or "<", "n", false)
@@ -44,6 +48,18 @@ vim.keymap.set("n", "<leader>cf", "<cmd>ShellcheckFix<cr>", {
   desc = "Apply ShellCheck fixes",
 })
 
--- Set filetype to sh (Bash) or zsh and trigger esqueleto template
-vim.keymap.set("n", "<leader>fs", "<cmd>set filetype=sh<cr>", { desc = "Set Filetype: sh (Bash)" })
-vim.keymap.set("n", "<leader>fz", "<cmd>set filetype=zsh<cr>", { desc = "Set Filetype: zsh" })
+local function prepend_esqueleto()
+  -- Save existing lines if the buffer is not empty
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local has_content = #lines > 1 or (lines[1] and lines[1] ~= "")
+
+  -- Run EsqueletoInsert (which populates the template)
+  vim.cmd("EsqueletoInsert")
+
+  -- Append the original lines back below the template
+  if has_content then
+    vim.api.nvim_buf_set_lines(0, -1, -1, false, lines)
+  end
+end
+
+vim.keymap.set("n", "<leader>fh", prepend_esqueleto, { desc = "Prepend Skeleton Header" })

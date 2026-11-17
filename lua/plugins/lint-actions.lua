@@ -17,8 +17,7 @@ return {
       require("lint_actions").setup(opts)
 
       vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
-        pattern = "*.sh",
-        "*.zsh",
+        pattern = { "*.sh", "*.zsh" },
         callback = function()
           lint.try_lint()
         end,
